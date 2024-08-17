@@ -1,18 +1,22 @@
 import { FormEvent, useRef, useState } from "react";
 import { Form, Stack, Row, Col,Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CreateReactSelect from "react-select/creatable";
 import { NoteData,Tag } from "./App";
+import { v4 as uuidv4 } from 'uuid';
 
 type NoteFormProps = {
   onSubmit: (data: NoteData) => void
+  onAddTag: (tag: Tag) => void
+  availableTags: Tag[]
 }
 
-const NoteForm = ({onSubmit}: NoteFormProps) => {
+const NoteForm = ({onSubmit , onAddTag, availableTags}: NoteFormProps) => {
 
   const titleRef = useRef<HTMLInputElement>(null);
   const markdownRef = useRef<HTMLTextAreaElement>(null);
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+  const navigate = useNavigate();
 
   function handelSubmit(e: FormEvent){
     e.preventDefault();
@@ -20,14 +24,16 @@ const NoteForm = ({onSubmit}: NoteFormProps) => {
     onSubmit({
       title: titleRef.current!.value,
       markdown: markdownRef.current!.value,
-      tags: [],
-    })
+      tags: selectedTags,
+    });
+
+    navigate("..");
   }
 
   return (
     <Form onSubmit={handelSubmit}>
       <Stack gap={4}>
-        <Row>
+        <Row >
           <Col>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
@@ -37,11 +43,19 @@ const NoteForm = ({onSubmit}: NoteFormProps) => {
           <Col>
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
-              <CreateReactSelect  
+              <CreateReactSelect 
+              onCreateOption={label => {
+                const newTag = {id:uuidv4(), label}
+                onAddTag(newTag)  //to store on local storage
+                // avaliableTags={tags}
+                setSelectedTags(prev => [...prev, newTag])
+              }} 
               value={selectedTags.map( tag => {
                 return {label: tag.label, value: tag.id}
               })}
-
+              options={availableTags.map(tag => {
+                return {label: tag.label, value: tag.id}
+              })}
               //converting to store our actual data type
               onChange={tags =>{
                 setSelectedTags(
@@ -62,7 +76,8 @@ const NoteForm = ({onSubmit}: NoteFormProps) => {
 
         <Stack direction="horizontal" gap={2} className="justify-content-end">
             <Button type="submit" variant="primary">Save</Button>
-            <Link to="..">
+            {/* when cancle btn clicked then go back to the home page */}
+            <Link to=".."> 
               <Button type="button" variant="outline-secondary">Cancel</Button>
             </Link>
         </Stack>
