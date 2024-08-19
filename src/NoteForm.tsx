@@ -43,14 +43,13 @@ const NoteForm = ({
           <Col>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
-              <Form.Control ref={titleRef} required defaultValue={title}/>
+              <Form.Control ref={titleRef} required defaultValue={title} />
             </Form.Group>
           </Col>
           <Col>
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
               <CreateReactSelect
-              
                 onCreateOption={(label) => {
                   const newTag = { id: uuidv4(), label };
                   onAddTag(newTag); //to store on local storage
@@ -79,7 +78,13 @@ const NoteForm = ({
 
         <Form.Group controlId="title">
           <Form.Label>Body</Form.Label>
-          <Form.Control defaultValue={markdown} required as="textarea" ref={markdownRef} rows={15} />
+          <Form.Control
+            defaultValue={markdown}
+            required
+            as="textarea"
+            ref={markdownRef}
+            rows={13}
+          />
         </Form.Group>
 
         <Stack direction="horizontal" gap={2} className="justify-content-end">
