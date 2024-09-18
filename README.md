@@ -1,6 +1,6 @@
 # QuickNote
 
-    I built a feature-rich notes app that allows users to create, organize, and manage notes efficiently. Users can add tags to their notes, making it easy to categorize and search through titles or tags. This app provides a seamless experience for users to store and access important information quickly and intuitively.
+I built a feature-rich notes app that allows users to create, organize, and manage notes efficiently. Users can add tags to their notes, making it easy to categorize and search through titles or tags. This app provides a seamless experience for users to store and access important information quickly and intuitively.
 
 ## Features
 
@@ -29,11 +29,23 @@
    ```bash
    git clone https://github.com/Soumya-Jagannath-Ojha/QuickNote.git
 
+   ```
+
 2. Navigate to the project directory:
 
    ```bash
    cd QuickNote
 
+   ```
+
 3. Install the dependencies
+
    ```bash
    npm install
+
+   ```
+
+4. Run
+   ```bash
+   npm run dev
+   ```
